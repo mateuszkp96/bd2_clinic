@@ -25,6 +25,9 @@ public class Patient {
     @Column(name = "telefon")
     private String phoneNumber;
 
+    @Column(name = "pesel")
+    private String identityNumber;
+
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "Adresy_id")
     private Address address;

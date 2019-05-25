@@ -2,6 +2,7 @@ package com.mkopec.clinic.mapper;
 
 import com.mkopec.clinic.domain.Patient;
 import com.mkopec.clinic.dtos.PatientDTO;
+import com.mkopec.clinic.dtos.PatientPostDTO;
 import com.mkopec.clinic.dtos.ShortPatientDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -21,4 +22,6 @@ public abstract class PatientMapper {
     public abstract ShortPatientDTO toShortPatientDTO(Patient patient);
 
     public abstract List<ShortPatientDTO> toShortPatientDTOs(List<Patient> patients);
+
+    public abstract Patient toPatient(PatientPostDTO patient);
 }
