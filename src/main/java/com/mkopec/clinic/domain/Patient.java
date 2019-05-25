@@ -25,7 +25,7 @@ public class Patient {
     @Column(name = "telefon")
     private String phoneNumber;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "Adresy_id")
     private Address address;
 }
