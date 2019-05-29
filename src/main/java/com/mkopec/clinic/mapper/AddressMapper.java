@@ -3,8 +3,6 @@ package com.mkopec.clinic.mapper;
 import com.mkopec.clinic.domain.Address;
 import com.mkopec.clinic.dtos.AddressDTO;
 import org.mapstruct.Mapper;
-import org.springframework.context.annotation.Bean;
-
 
 @Mapper(componentModel = "spring")
 public abstract class AddressMapper {

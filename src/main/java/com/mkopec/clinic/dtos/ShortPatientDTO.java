@@ -1,15 +1,10 @@
 package com.mkopec.clinic.dtos;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
+@Data
 public class ShortPatientDTO {
-
     private Long id;
-
     private String firstname;
-
     private String surname;
 }

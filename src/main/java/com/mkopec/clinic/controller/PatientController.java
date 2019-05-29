@@ -8,29 +8,18 @@ import com.mkopec.clinic.dtos.ShortPatientDTO;
 import com.mkopec.clinic.mapper.PatientMapper;
 import com.mkopec.clinic.service.AddressService;
 import com.mkopec.clinic.service.PatientService;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers.ignoreCase;
-
 @RestController
 @RequestMapping("/patients")
+@RequiredArgsConstructor
 public class PatientController {
-
     private final PatientService patientService;
-
     private final AddressService addressService;
-
     private final PatientMapper patientMapper;
-
-    public PatientController(PatientService patientService, AddressService addressService, PatientMapper patientMapper) {
-        this.patientService = patientService;
-        this.addressService = addressService;
-        this.patientMapper = patientMapper;
-    }
 
     @GetMapping
     public List<ShortPatientDTO> getAllPatients() {

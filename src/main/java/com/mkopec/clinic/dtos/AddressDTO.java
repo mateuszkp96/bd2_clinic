@@ -1,19 +1,12 @@
 package com.mkopec.clinic.dtos;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
+@Data
 public class AddressDTO {
-
     private Long id;
-
     private String postCode;
-
     private String city;
-
     private String street;
-
     private String houseNumber;
 }

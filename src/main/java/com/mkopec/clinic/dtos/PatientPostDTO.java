@@ -1,19 +1,12 @@
 package com.mkopec.clinic.dtos;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
+@Data
 public class PatientPostDTO {
-
     private String firstname;
-
     private String surname;
-
     private String phoneNumber;
-
     private String identityNumber;
-
     private AddressPostDTO address;
 }
