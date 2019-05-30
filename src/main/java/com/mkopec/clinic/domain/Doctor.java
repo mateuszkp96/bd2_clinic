@@ -2,10 +2,11 @@ package com.mkopec.clinic.domain;
 
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
+
+import static javax.persistence.CascadeType.ALL;
+import static javax.persistence.FetchType.LAZY;
 
 @Entity
 @Data
@@ -21,4 +22,7 @@ public class Doctor {
 
     @Column(name = "Pracownicy_nazwisko")
     private String surname;
+
+    @OneToMany(cascade = ALL, mappedBy = "doctor", fetch = LAZY)
+    private List<DoctorSpecialization> specializations;
 }
