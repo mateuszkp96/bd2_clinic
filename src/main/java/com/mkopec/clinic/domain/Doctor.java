@@ -25,4 +25,7 @@ public class Doctor {
 
     @OneToMany(cascade = ALL, mappedBy = "doctor", fetch = LAZY)
     private List<DoctorSpecialization> specializations;
+
+    @OneToMany(cascade = ALL, mappedBy = "doctor", fetch = LAZY)
+    private List<Shift> shifts;
 }
