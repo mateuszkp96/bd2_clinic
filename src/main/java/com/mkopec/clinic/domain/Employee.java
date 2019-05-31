@@ -33,4 +33,8 @@ public class Employee {
 
     @OneToOne(mappedBy = "employee", orphanRemoval = true)
     private Admin admin;
+
+    @OneToOne(mappedBy = "employee", orphanRemoval = true)
+    private Receptionist receptionist;
+
 }
