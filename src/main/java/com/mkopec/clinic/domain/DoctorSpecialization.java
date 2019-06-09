@@ -5,6 +5,7 @@ import lombok.Data;
 import javax.persistence.*;
 
 import static javax.persistence.FetchType.LAZY;
+import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Data
@@ -12,7 +13,7 @@ import static javax.persistence.FetchType.LAZY;
 public class DoctorSpecialization {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
     @Column(name = "Specjalności_id")

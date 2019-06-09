@@ -9,5 +9,5 @@ public class DoctorDTO {
     private Long id;
     private String firstname;
     private String surname;
-    private List<SpecializationDTO> specialization;
+    private List<DoctorSpecializationDTO> specialization;
 }

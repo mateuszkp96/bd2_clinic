@@ -13,11 +13,11 @@ import java.util.List;
 public abstract class DoctorMapper {
 
     @Autowired
-    protected SpecializationMapper specializationMapper;
+    protected DoctorSpecializationMapper doctorSpecializationMapper;
 
     @Mappings({
             @Mapping(target = "firstname", source = "name"),
-            @Mapping(target = "specialization", expression = "java(specializationMapper.toDoctorSpecializationDTOs(doctor.getSpecializations()))")
+            @Mapping(target = "specialization", expression = "java(doctorSpecializationMapper.toDoctorSpecializationDTOs(doctor.getSpecializations()))")
     })
     public abstract DoctorDTO toDoctorDTO(Doctor doctor);
 
