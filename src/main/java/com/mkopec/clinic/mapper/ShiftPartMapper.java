@@ -14,8 +14,8 @@ public abstract class ShiftPartMapper {
     @Mappings({
             @Mapping(target = "startHour", expression = "java(shiftPart.getStartTime().getHour())"),
             @Mapping(target = "startMinute", expression = "java(shiftPart.getStartTime().getMinute())"),
-            @Mapping(target = "endHour", expression = "java(shiftPart.getStartTime().getHour())"),
-            @Mapping(target = "endMinute", expression = "java(shiftPart.getStartTime().getMinute())")
+            @Mapping(target = "endHour", expression = "java(shiftPart.getEndTime().getHour())"),
+            @Mapping(target = "endMinute", expression = "java(shiftPart.getEndTime().getMinute())")
     })
     public abstract ShiftPartDTO toShiftPartDTO(ShiftPart shiftPart);
 

@@ -10,4 +10,5 @@ import java.util.List;
 @Repository
 public interface ShiftRepository extends JpaRepository<Shift, Long> {
     List<Shift> findByDoctor(Doctor doctor);
+    List<Shift> findByDoctorAndDayOfWeek(Doctor doctor, Integer dayOfWeek);
 }

@@ -2,6 +2,7 @@ package com.mkopec.clinic.mapper;
 
 import com.mkopec.clinic.domain.Shift;
 import com.mkopec.clinic.dtos.ShiftDTO;
+import com.mkopec.clinic.dtos.ShiftPostDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
@@ -15,6 +16,9 @@ public abstract class ShiftMapper {
     @Autowired
     protected ShiftPartMapper shiftPartMapper;
 
+    @Autowired
+    protected SurgeryMapper surgeryMapper;
+
     @Mappings({
             @Mapping(target = "officeNumber", source = "shift.surgery.number"),
             @Mapping(target = "parts", expression = "java(shiftPartMapper.toShiftPartDTOs(shift.getShiftParts()))")
@@ -22,4 +26,9 @@ public abstract class ShiftMapper {
     public abstract ShiftDTO toShiftDTO(Shift shift);
 
     public abstract List<ShiftDTO> toShiftDTOs(List<Shift> shifts);
+
+    public abstract Shift toShift(ShiftPostDTO shiftPostDTO);
+    
+    @Mapping(target = "surgeryID", expression = "java(shift.getSurgery().getId())")
+    public abstract ShiftPostDTO toShiftPostDTO(Shift shift);
 }
