@@ -18,6 +18,10 @@ public class SpecializationService {
         return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Specialization", "id", id));
     }
 
+    public List<Specialization> findAllByID(List<Long> specializationIDs) {
+        return repository.findAllById(specializationIDs);
+    }
+
     public List<Specialization> getAll() {
         return repository.findAll();
     }

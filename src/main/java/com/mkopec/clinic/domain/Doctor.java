@@ -18,7 +18,7 @@ public class Doctor {
     private Long id;
 
     @Column(name = "Pracownicy_imię")
-    private String name;
+    private String firstname;
 
     @Column(name = "Pracownicy_nazwisko")
     private String surname;
@@ -28,4 +28,8 @@ public class Doctor {
 
     @OneToMany(cascade = ALL, mappedBy = "doctor", fetch = LAZY)
     private List<Shift> shifts;
+
+    @OneToOne
+    @JoinColumn(name = "Pracownicy_id")
+    private Employee employee;
 }

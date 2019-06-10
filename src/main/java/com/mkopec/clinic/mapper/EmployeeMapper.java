@@ -1,6 +1,7 @@
 package com.mkopec.clinic.mapper;
 
 import com.mkopec.clinic.domain.Employee;
+import com.mkopec.clinic.dtos.DoctorPostDTO;
 import com.mkopec.clinic.dtos.EmployeeDTO;
 import com.mkopec.clinic.dtos.EmployeePostDTO;
 import com.mkopec.clinic.dtos.ShortEmployeeDTO;
@@ -20,4 +21,6 @@ public abstract class EmployeeMapper {
     public abstract EmployeePostDTO toEmployeePostDTO(Employee employee);
 
     public abstract ShortEmployeeDTO toShortEmployeeDTO(Employee employee);
+
+    public abstract Employee toEmployee(DoctorPostDTO doctorPostDTO);
 }
