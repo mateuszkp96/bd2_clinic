@@ -4,6 +4,7 @@ import com.mkopec.clinic.domain.Appointment;
 import com.mkopec.clinic.domain.Shift;
 import com.mkopec.clinic.domain.ShiftPart;
 import com.mkopec.clinic.dtos.AppointmentDTO;
+import com.mkopec.clinic.exception.ResourceNotFoundException;
 import com.mkopec.clinic.repository.AppointmentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,5 +26,9 @@ public class AppointmentService {
 
     public List<Appointment> findAll() {
         return repository.findAll();
+    }
+
+    public Appointment findByID(Long id) {
+        return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("AppointmentService", "id", id));
     }
 }
