@@ -8,10 +8,7 @@ public class AppointmentPostDTO {
     private Integer dateDay;
     private Integer dateMonth;
     private Integer dateYear;
-    private Integer startHour;
-    private Integer startMinute;
-    private Integer endHour;
-    private Integer endMinute;
+    private Long shiftPartID;
     private Long patientID;
     private Long doctorID;
 }

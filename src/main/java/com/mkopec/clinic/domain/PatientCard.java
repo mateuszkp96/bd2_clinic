@@ -10,7 +10,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Data
-@Table(name = "karty_Pacjenta")
+@Table(name = "Karty_Pacjenta")
 public class PatientCard {
 
     @Id
@@ -37,6 +37,6 @@ public class PatientCard {
     @JoinColumn(name = "Pacjenci_id")
     private Patient patient;
 
-    @OneToMany(fetch = LAZY)
+    @OneToMany(fetch = LAZY, mappedBy = "patientCard")
     private List<Appointment> appointments;
 }

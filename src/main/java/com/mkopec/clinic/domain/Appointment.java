@@ -4,6 +4,8 @@ import lombok.Data;
 
 import javax.persistence.*;
 
+import java.util.List;
+
 import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -32,4 +34,7 @@ public class Appointment {
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "Karty_Pacjenta_id")
     private PatientCard patientCard;
+
+    @OneToMany(fetch = LAZY, mappedBy = "appointment")
+    private List<AppointmentExamination> examinations;
 }

@@ -15,4 +15,8 @@ public class PatientCardService {
     public PatientCard findByDoctorAndPatient(Doctor doctor, Patient patient) {
         return repository.findByDoctorAndPatient(doctor, patient);
     }
+
+    public PatientCard save(PatientCard patientCard) {
+        return repository.save(patientCard);
+    }
 }
