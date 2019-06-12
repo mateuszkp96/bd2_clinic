@@ -11,6 +11,9 @@ import com.mkopec.clinic.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @RestController
@@ -73,16 +76,7 @@ public class AppointmentController {
         appointment.setShiftPart(shiftPart);
         appointment.setShift(shiftPart.getShift());
 
-        appointment.setDate(getDateFromDTO(appointmentPostDTO));
-
         return appointmentMapper.toAppointmentPostDTO(appointmentService.save(appointment));
-    }
-
-    private Calendar getDateFromDTO(AppointmentPostDTO dto) {
-        Calendar c = Calendar.getInstance();
-        c.set(dto.getDateYear(), dto.getDateMonth() - 1, dto.getDateDay());
-        c.get(Calendar.MONTH);
-        return c;
     }
 
     private PatientCard createPatientCard(Doctor doctor, Patient patient) {
