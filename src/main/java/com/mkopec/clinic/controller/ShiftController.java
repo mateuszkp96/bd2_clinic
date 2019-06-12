@@ -1,21 +1,18 @@
 package com.mkopec.clinic.controller;
 
-import com.mkopec.clinic.domain.Doctor;
-import com.mkopec.clinic.domain.Part;
-import com.mkopec.clinic.domain.Shift;
-import com.mkopec.clinic.domain.Surgery;
+import com.mkopec.clinic.domain.*;
 import com.mkopec.clinic.dtos.FullShiftPostDTO;
 import com.mkopec.clinic.dtos.ShiftDTO;
+import com.mkopec.clinic.dtos.ShiftPartDTO;
 import com.mkopec.clinic.dtos.ShiftPostDTO;
 import com.mkopec.clinic.mapper.ShiftMapper;
-import com.mkopec.clinic.service.DoctorService;
-import com.mkopec.clinic.service.PartService;
-import com.mkopec.clinic.service.ShiftService;
-import com.mkopec.clinic.service.SurgeryService;
+import com.mkopec.clinic.mapper.ShiftPartMapper;
+import com.mkopec.clinic.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -30,6 +27,8 @@ public class ShiftController {
     private final SurgeryService surgeryService;
 
     private final PartService partService;
+    private final ShiftPartService shiftPartService;
+    private final ShiftPartMapper shiftPartMapper;
 
     @GetMapping("/{id}")
     public List<ShiftDTO> getDoctorShifts(@PathVariable Long id) {
@@ -63,24 +62,42 @@ public class ShiftController {
 
     @PostMapping("/shiftWithPart")
     public FullShiftPostDTO saveDoctorShiftWithParts(@RequestBody FullShiftPostDTO postDTO) {
-        Shift shift = shiftMapper.toShift(postDTO);
-
-        // Shift savedShift = shiftService.save(shift);
-
         LocalTime startTime = LocalTime.parse(postDTO.getStartTime());
         LocalTime endTime = LocalTime.parse(postDTO.getEndTime());
-        LocalTime quant = LocalTime.parse("00:15:00");
+        String quant = "00:15:00";
+        List<Part> parts = partService.findAllByStartAndEndAndQuant(startTime, endTime, "00:15:00");
 
-        List<Part> parts = partService.findAllByStartAndEndAndQuant(startTime, endTime, quant);
+        Shift savedShift = shiftService.save(shiftMapper.toShift(postDTO));
 
-        int a = 4;
-        return null;
+        List<ShiftPart> savedShiftParts = shiftPartService.saveAll(createShiftPartsFromShift(savedShift, parts));
+
+        FullShiftPostDTO result = shiftMapper.toFullShiftPostDTO(savedShift);
+        result.setStartTime(postDTO.getStartTime());
+        result.setEndTime(postDTO.getEndTime());
+
+        return result;
     }
 
-    @PostMapping()
+    private List<ShiftPart> createShiftPartsFromShift(Shift shift, List<Part> parts) {
+        List<ShiftPart> result = new ArrayList<>();
+        for (Part p : parts) {
+            ShiftPart shiftPart = new ShiftPart();
+            shiftPart.setShift(shift);
+            shiftPart.setPartID(p.getId());
+            shiftPart.setStartTime(p.getStartTime());
+            shiftPart.setEndTime(p.getEndTime());
+            result.add(shiftPart);
+        }
+        return result;
+    }
 
     @DeleteMapping("/{id}")
     public void deleteShift(@PathVariable Long id) {
         shiftService.delete(id);
+    }
+
+    @GetMapping("/shiftParts/{shiftID}")
+    public List<ShiftPartDTO> getShiftPartsByShift(@PathVariable Long shiftID) {
+        return shiftPartMapper.toShiftPartDTOs(shiftPartService.findAllByShiftID(shiftID));
     }
 }

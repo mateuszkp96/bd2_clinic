@@ -16,7 +16,7 @@ public interface PartRepository extends JpaRepository<Part, Long> {
 //    List<Part> findByStartTimeAndEndTimeAndQuant(LocalTime startTime, LocalTime endTime, Long quant);
 
         @Query(nativeQuery = true,
-            value = "SELECT * FROM Sloty WHERE :startTime <= Sloty.start AND  Sloty.koniec <= :endTime AND TIMESTAMPDIFF(Sloty.koniec, Sloty.start) <= :quant")
-    List<Part> findByStartTimeAndEndTimeAndQuant(@Param("startTime") LocalTime startTime, @Param("endTime") LocalTime endTime, @Param("quant") LocalTime quant);
+            value = "SELECT * FROM Sloty WHERE :startTime <= Sloty.start AND  Sloty.koniec <= :endTime AND TIMEDIFF(Sloty.koniec, Sloty.start) = :quant")
+    List<Part> findByStartTimeAndEndTimeAndQuant(@Param("startTime") LocalTime startTime, @Param("endTime") LocalTime endTime, @Param("quant") String quant);
 
 }

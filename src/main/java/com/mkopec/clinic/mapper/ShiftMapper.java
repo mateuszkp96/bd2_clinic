@@ -39,4 +39,11 @@ public abstract class ShiftMapper {
             @Mapping(target = "dayOfWeek", expression = "java(Integer.valueOf(postDTO.getDay()))")
     })
     public abstract Shift toShift(FullShiftPostDTO postDTO);
+
+    @Mappings({
+            @Mapping(target = "day", source = "dayOfWeek"),
+            @Mapping(target = "doctorsID", source = "doctor.id"),
+            @Mapping(target = "doctorsOfficeID", source = "surgery.id")
+    })
+    public abstract FullShiftPostDTO toFullShiftPostDTO(Shift shift);
 }

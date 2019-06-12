@@ -30,7 +30,7 @@ public class PartService {
         repository.deleteById(id);
     }
 
-    public List<Part> findAllByStartAndEndAndQuant(LocalTime startTime, LocalTime endTime, LocalTime quant) {
+    public List<Part> findAllByStartAndEndAndQuant(LocalTime startTime, LocalTime endTime, String quant) {
         return repository.findByStartTimeAndEndTimeAndQuant(startTime, endTime, quant);
     }
 }

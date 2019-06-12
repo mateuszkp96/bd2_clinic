@@ -1,6 +1,5 @@
 package com.mkopec.clinic.service;
 
-import com.mkopec.clinic.domain.Shift;
 import com.mkopec.clinic.domain.ShiftPart;
 import com.mkopec.clinic.exception.ResourceNotFoundException;
 import com.mkopec.clinic.repository.ShiftPartRepository;
@@ -14,8 +13,8 @@ import java.util.List;
 public class ShiftPartService {
     private final ShiftPartRepository repository;
 
-    public List<ShiftPart> findByShift(Shift shift) {
-        return repository.findByShift(shift);
+    public List<ShiftPart> findAllByShiftID(Long shiftID) {
+        return repository.findAllByShiftID(shiftID);
     }
 
     public ShiftPart findByID(Long id) {
@@ -24,5 +23,9 @@ public class ShiftPartService {
 
     public List<ShiftPart> findAllByIDs(List<Long> shifts) {
         return repository.findAllById(shifts);
+    }
+
+    public List<ShiftPart> saveAll(List<ShiftPart> shiftParts) {
+        return repository.saveAll(shiftParts);
     }
 }
