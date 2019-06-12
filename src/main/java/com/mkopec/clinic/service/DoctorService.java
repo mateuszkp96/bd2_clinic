@@ -24,4 +24,8 @@ public class DoctorService {
     public Doctor saveDoctor(Doctor doctor) {
         return repository.save(doctor);
     }
+
+    public List<Long> findBySpecializationID(Long id) {
+        return repository.findBySpecializationID(id);
+    }
 }
