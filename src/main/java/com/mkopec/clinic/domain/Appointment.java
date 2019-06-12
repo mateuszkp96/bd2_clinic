@@ -3,7 +3,6 @@ package com.mkopec.clinic.domain;
 import lombok.Data;
 
 import javax.persistence.*;
-
 import java.util.List;
 
 import static javax.persistence.FetchType.LAZY;
@@ -37,4 +36,7 @@ public class Appointment {
 
     @OneToMany(fetch = LAZY, mappedBy = "appointment")
     private List<AppointmentExamination> examinations;
+
+    @OneToMany(fetch = LAZY, mappedBy = "appointment")
+    private List<Referral> referrals;
 }

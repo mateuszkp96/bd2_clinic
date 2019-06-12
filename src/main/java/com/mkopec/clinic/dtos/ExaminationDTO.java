@@ -7,5 +7,5 @@ public class ExaminationDTO {
     private Long id;
     private String name;
     private Long price;
-    private Boolean referralNeeded;
+    private Boolean referral;
 }

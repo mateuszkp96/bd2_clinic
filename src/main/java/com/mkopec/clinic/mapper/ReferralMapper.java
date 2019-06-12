@@ -29,6 +29,7 @@ public abstract class ReferralMapper {
     })
     public abstract Referral toReferral(ReferralPostDTO postDTO);
 
+    @Mapping(target = "scopeOfExaminations", source = "name")
     public abstract ReferralDTO toReferralDTO(Referral referral);
 
     public abstract List<ReferralDTO> toReferralDTOs(List<Referral> referral);

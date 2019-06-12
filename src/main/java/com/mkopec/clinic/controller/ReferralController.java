@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/writtenReferral")
+@RequestMapping("/referral")
 public class ReferralController {
     private final ReferralService service;
     private final ReferralMapper mapper;
@@ -28,8 +28,8 @@ public class ReferralController {
     }
 
     @PostMapping
-    public ReferralPostDTO postScopeOfExamination(@RequestBody ReferralPostDTO scopeOfExaminationDTO) {
-        Referral referral = mapper.toReferral(scopeOfExaminationDTO);
+    public ReferralPostDTO saveReferral(@RequestBody ReferralPostDTO postDTO) {
+        Referral referral = mapper.toReferral(postDTO);
         return mapper.toReferralPostDTO(service.save(referral));
     }
 

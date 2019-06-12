@@ -1,6 +1,7 @@
 package com.mkopec.clinic.mapper;
 
 import com.mkopec.clinic.domain.Shift;
+import com.mkopec.clinic.dtos.FullShiftPostDTO;
 import com.mkopec.clinic.dtos.ShiftDTO;
 import com.mkopec.clinic.dtos.ShiftPostDTO;
 import org.mapstruct.Mapper;
@@ -31,4 +32,11 @@ public abstract class ShiftMapper {
     
     @Mapping(target = "surgeryID", expression = "java(shift.getSurgery().getId())")
     public abstract ShiftPostDTO toShiftPostDTO(Shift shift);
+
+    @Mappings({
+            @Mapping(target = "surgery.id", source = "postDTO.doctorsOfficeID"),
+            @Mapping(target = "doctor.id", source = "postDTO.doctorsID"),
+            @Mapping(target = "dayOfWeek", expression = "java(Integer.valueOf(postDTO.getDay()))")
+    })
+    public abstract Shift toShift(FullShiftPostDTO postDTO);
 }

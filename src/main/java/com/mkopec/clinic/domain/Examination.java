@@ -24,5 +24,5 @@ public class Examination {
 
     @Column(name = "czy_wymaga_skierowania", columnDefinition = "TINYINT")
     @Type(type = "org.hibernate.type.NumericBooleanType")
-    private Boolean referralNeeded;
+    private Boolean referral;
 }

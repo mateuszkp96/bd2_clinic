@@ -1,9 +1,7 @@
 package com.mkopec.clinic.controller;
 
 import com.mkopec.clinic.domain.*;
-import com.mkopec.clinic.dtos.AppointmentDateDTO;
-import com.mkopec.clinic.dtos.AppointmentPostDTO;
-import com.mkopec.clinic.dtos.DoctorAppointmentDTO;
+import com.mkopec.clinic.dtos.*;
 import com.mkopec.clinic.mapper.AppointmentDateMapper;
 import com.mkopec.clinic.mapper.AppointmentMapper;
 import com.mkopec.clinic.projections.AppointmentDate;
@@ -11,9 +9,6 @@ import com.mkopec.clinic.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 @RestController
@@ -29,6 +24,12 @@ public class AppointmentController {
 
     private final ShiftPartService shiftPartService;
     private final AppointmentDateMapper appointmentDateMapper;
+
+    @GetMapping("/details/{appointmentID}")
+    public AppointmentDetailsDTO getAppointmentDetails(@PathVariable Long appointmentID) {
+        Appointment appointment = appointmentService.findByID(appointmentID);
+        return appointmentMapper.toAppointmentDetailsDTO(appointment);
+    }
 
     @GetMapping("/doctor/{doctorId}")
     public List<DoctorAppointmentDTO> getTodayAppointments(@PathVariable Long doctorId) {

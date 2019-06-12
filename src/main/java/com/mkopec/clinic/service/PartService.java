@@ -6,6 +6,7 @@ import com.mkopec.clinic.repository.PartRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalTime;
 import java.util.List;
 
 @Service
@@ -27,5 +28,9 @@ public class PartService {
 
     public void delete(Long id) {
         repository.deleteById(id);
+    }
+
+    public List<Part> findAllByStartAndEndAndQuant(LocalTime startTime, LocalTime endTime, LocalTime quant) {
+        return repository.findByStartTimeAndEndTimeAndQuant(startTime, endTime, quant);
     }
 }

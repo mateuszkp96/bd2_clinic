@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/appointment/examination")
+@RequestMapping("/appointmentExamination")
 public class AppointmentExaminationController {
     private final AppointmentExaminationService appointmentExaminationService;
     private final AppointmentExaminationMapper appointmentExaminationMapper;
