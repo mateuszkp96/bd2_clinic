@@ -28,6 +28,9 @@ public class Employee {
     @Column(name = "nazwisko")
     private String surname;
 
+    @Column(name = "typ")
+    private String role;
+
     @ManyToMany(mappedBy = "employees")
     private List<Clinic> clinics;
 

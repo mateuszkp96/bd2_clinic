@@ -40,7 +40,8 @@ public class DoctorController {
 
     @PostMapping
     public DoctorPostDTO saveDoctor(@RequestBody DoctorPostDTO doctorPostDTO) {
-        Employee employee = employeeMapper.toEmployee(doctorPostDTO);
+        Employee employee = employeeMapper.toEmployeeFromDoctor(doctorPostDTO);
+        employee.setRole("lek");
         Employee savedEmployee = employeeService.saveEmployee(employee);
 
         Doctor doctor = createDoctorFromEmployee(savedEmployee);
