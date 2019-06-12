@@ -5,5 +5,6 @@ import lombok.Data;
 @Data
 public class ReferralDTO {
     private Long id;
-    private String scopeOfExaminations;
+    private Long appointmentID;
+    private ScopeOfExaminationDTO scope;
 }
