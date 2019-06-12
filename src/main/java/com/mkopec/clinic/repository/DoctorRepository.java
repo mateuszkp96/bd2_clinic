@@ -10,6 +10,6 @@ import java.util.List;
 @Repository
 public interface DoctorRepository extends JpaRepository<Doctor, Long> {
 
-    @Query("SELECT doc.id FROM Doctor doc, DoctorSpecialization sp WHERE sp.specializationID = ?1 AND sp IN (doc.specializations)")
+    @Query("SELECT doc.id FROM Doctor doc JOIN DoctorSpecialization sp ON doc.id = sp.doctor.id WHERE sp.specializationID = ?1")
     List<Long> findBySpecializationID(Long id);
 }
