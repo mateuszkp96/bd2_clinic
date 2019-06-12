@@ -90,4 +90,14 @@ public class AppointmentController {
         card.setCreateDate(Calendar.getInstance());
         return card;
     }
+
+    @GetMapping("/patientCard")
+    public List<ShortAppointmentDTO> getAppointments(@RequestParam(name = "patientID") Long patientID,
+                                                     @RequestParam(name = "doctorID") Long doctorID) {
+        PatientCard patientCard = patientCardService.findByDoctorIDAndPatientID(doctorID, patientID);
+        if (Objects.nonNull(patientCard)) {
+            return appointmentMapper.toShortAppointmentDTOs(appointmentService.findByPatientCard(patientCard));
+        }
+        return null;
+    }
 }

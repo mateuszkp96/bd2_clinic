@@ -1,6 +1,7 @@
 package com.mkopec.clinic.service;
 
 import com.mkopec.clinic.domain.Appointment;
+import com.mkopec.clinic.domain.PatientCard;
 import com.mkopec.clinic.domain.Shift;
 import com.mkopec.clinic.domain.ShiftPart;
 import com.mkopec.clinic.exception.ResourceNotFoundException;
@@ -39,5 +40,9 @@ public class AppointmentService {
 
     public List<AppointmentDate> findAppointmentDates(Calendar from, Calendar to, List<Long> doctorIDs) {
         return repository.findMyResult(from, to, doctorIDs);
+    }
+
+    public List<Appointment> findByPatientCard(PatientCard patientCard) {
+        return repository.findByPatientCard(patientCard);
     }
 }

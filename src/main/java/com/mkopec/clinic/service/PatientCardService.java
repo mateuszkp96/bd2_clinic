@@ -16,6 +16,10 @@ public class PatientCardService {
         return repository.findByDoctorAndPatient(doctor, patient);
     }
 
+    public PatientCard findByDoctorIDAndPatientID(Long doctorID, Long patientID) {
+        return repository.findByDoctorIDAndPatientID(doctorID, patientID);
+    }
+
     public PatientCard save(PatientCard patientCard) {
         return repository.save(patientCard);
     }

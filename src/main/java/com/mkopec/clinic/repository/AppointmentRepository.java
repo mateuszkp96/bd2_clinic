@@ -1,6 +1,7 @@
 package com.mkopec.clinic.repository;
 
 import com.mkopec.clinic.domain.Appointment;
+import com.mkopec.clinic.domain.PatientCard;
 import com.mkopec.clinic.domain.Shift;
 import com.mkopec.clinic.domain.ShiftPart;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,4 +18,6 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long>,
 
     @Query("select ap from Appointment ap where ap.date = ?1 and ap.patientCard.doctor.id = ?2")
     List<Appointment> findByDateAndDoctorID(java.util.Calendar date, Long doctorID);
+
+    List<Appointment> findByPatientCard(PatientCard patientCard);
 }

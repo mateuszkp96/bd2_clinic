@@ -4,10 +4,7 @@ import com.mkopec.clinic.domain.Appointment;
 import com.mkopec.clinic.domain.AppointmentExamination;
 import com.mkopec.clinic.domain.Examination;
 import com.mkopec.clinic.domain.Referral;
-import com.mkopec.clinic.dtos.AppointmentDTO;
-import com.mkopec.clinic.dtos.AppointmentDetailsDTO;
-import com.mkopec.clinic.dtos.AppointmentPostDTO;
-import com.mkopec.clinic.dtos.DoctorAppointmentDTO;
+import com.mkopec.clinic.dtos.*;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
@@ -103,4 +100,10 @@ public abstract class AppointmentMapper {
     protected Referral getReferralFromAppointment(Appointment appointment) {
         return appointment.getReferrals().size() > 0 ? appointment.getReferrals().get(0) : null;
     }
+
+    @Mapping(target = "date", expression = "java(getTimeStringCalendar(appointment))")
+    public abstract ShortAppointmentDTO toShortAppointmentDTO(Appointment appointment);
+
+    public abstract List<ShortAppointmentDTO> toShortAppointmentDTOs(List<Appointment> appointments);
+
 }
