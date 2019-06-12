@@ -8,23 +8,21 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @Mapper(componentModel = "spring")
 public abstract class AppointmentMapper {
 
-    @Mappings({
-            @Mapping(target = "date", expression = "java(getDate(appointmentPostDTO))")
-    })
-    public abstract Appointment toAppointment(AppointmentPostDTO appointmentPostDTO);
-
-    public abstract AppointmentPostDTO toAppointment(Appointment appointment);
+    @Mapping(target = "date", expression = "java(getDateFromDTO(postDTO))")
+    public abstract Appointment toAppointment(AppointmentPostDTO postDTO);
 
     @Mappings({
-            @Mapping(target = "dateDay", expression = "java(getDay(appointment.getDate()))"),
-            @Mapping(target = "dateMonth", expression = "java(getMonth(appointment.getDate()))"),
-            @Mapping(target = "dateYear", expression = "java(getYear(appointment.getDate()))"),
+            @Mapping(target = "date", expression = "java(getTimeStringCalendar(appointment))"),
             @Mapping(target = "shiftPartID", source = "appointment.shiftPart.id"),
             @Mapping(target = "patientID", source = "appointment.patientCard.patient.id"),
             @Mapping(target = "doctorID", source = "appointment.patientCard.doctor.id")
@@ -36,28 +34,6 @@ public abstract class AppointmentMapper {
     public abstract AppointmentDTO toAppointmentDTO(Appointment appointment);
 
     public abstract List<AppointmentDTO> toAppointmentDTOs(List<Appointment> appointmentList);
-
-
-    protected Integer getYear(Calendar c) {
-        return c.get(Calendar.YEAR);
-    }
-
-    protected Integer getMonth(Calendar c) {
-        return c.get(Calendar.MONTH);
-    }
-
-    protected Integer getDay(Calendar c) {
-        return c.get(Calendar.DAY_OF_MONTH);
-    }
-
-    protected Calendar getDate(AppointmentPostDTO appointmentPostDTO) {
-        Calendar c = Calendar.getInstance();
-        c.set(Calendar.YEAR, appointmentPostDTO.getDateYear());
-        c.set(Calendar.MONTH, appointmentPostDTO.getDateMonth());
-        c.set(Calendar.DAY_OF_MONTH, appointmentPostDTO.getDateDay());
-        return c;
-    }
-
 
     @Mappings({
             @Mapping(target = "patientFirstname", source = "patientCard.firstname"),
@@ -71,5 +47,24 @@ public abstract class AppointmentMapper {
     protected String getTimeString(Appointment appointment) {
         return appointment.getShiftPart().getStartTime().toString() + "-" + appointment.getShiftPart().getEndTime().toString();
     }
+
+    protected Calendar getDateFromDTO(AppointmentPostDTO dto) {
+        Calendar c = Calendar.getInstance();
+        DateFormat format = new SimpleDateFormat("yyyy-mm-dd");
+        try {
+            Date date = format.parse(dto.getDate());
+            c.setTime(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return c;
+    }
+
+    protected String getTimeStringCalendar(Appointment appointment) {
+        DateFormat format = new SimpleDateFormat("yyyy-mm-dd");
+        Date date = appointment.getDate().getTime();
+        return format.format(date);
+    }
+
 
 }
