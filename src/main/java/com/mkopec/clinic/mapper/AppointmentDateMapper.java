@@ -14,7 +14,8 @@ public abstract class AppointmentDateMapper {
     @Mappings({
             @Mapping(target = "id", expression = "java(date.getID())"),
             @Mapping(target = "date", expression = "java(date.getSelectedDate())"),
-            @Mapping(target = "time", expression = "java(getTimeFromAppointmentDate(date))")
+            @Mapping(target = "time", expression = "java(getTimeFromAppointmentDate(date))"),
+            @Mapping(target = "doctorName", expression = "java(getNameFromAppointmentDate(date))")
     })
     public abstract AppointmentDateDTO toAppointmentDateDTO(AppointmentDate date);
 
@@ -22,5 +23,9 @@ public abstract class AppointmentDateMapper {
 
     protected String getTimeFromAppointmentDate(AppointmentDate date) {
         return date.getPartStart() + " - " + date.getPartEnd();
+    }
+
+    protected String getNameFromAppointmentDate(AppointmentDate date){
+        return date.getSurname() + " " + date.getFirstname();
     }
 }

@@ -5,4 +5,6 @@ public interface AppointmentDate {
     String getSelectedDate();
     String getPartStart();
     String getPartEnd();
+    String getFirstname();
+    String getSurname();
 }
