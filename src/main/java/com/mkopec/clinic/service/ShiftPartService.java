@@ -21,4 +21,8 @@ public class ShiftPartService {
     public ShiftPart findByID(Long id) {
         return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("ShiftPart", "id", id));
     }
+
+    public List<ShiftPart> findAllByIDs(List<Long> shifts) {
+        return repository.findAllById(shifts);
+    }
 }

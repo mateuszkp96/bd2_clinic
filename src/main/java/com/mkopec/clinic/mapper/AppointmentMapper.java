@@ -3,6 +3,7 @@ package com.mkopec.clinic.mapper;
 import com.mkopec.clinic.domain.Appointment;
 import com.mkopec.clinic.dtos.AppointmentDTO;
 import com.mkopec.clinic.dtos.AppointmentPostDTO;
+import com.mkopec.clinic.dtos.DoctorAppointmentDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
@@ -57,5 +58,18 @@ public abstract class AppointmentMapper {
         return c;
     }
 
+
+    @Mappings({
+            @Mapping(target = "patientFirstname", source = "patientCard.firstname"),
+            @Mapping(target = "patientSurname", source = "patientCard.surname"),
+            @Mapping(target = "time", expression = "java(getTimeString(appointment))")
+    })
+    public abstract DoctorAppointmentDTO toDoctorAppointmentDTO(Appointment appointment);
+
+    public abstract List<DoctorAppointmentDTO> toDoctorAppointmentDTOs(List<Appointment> appointments);
+
+    protected String getTimeString(Appointment appointment) {
+        return appointment.getShiftPart().getStartTime().toString() + "-" + appointment.getShiftPart().getEndTime().toString();
+    }
 
 }

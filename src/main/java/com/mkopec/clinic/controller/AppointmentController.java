@@ -1,20 +1,17 @@
 package com.mkopec.clinic.controller;
 
 import com.mkopec.clinic.domain.*;
-import com.mkopec.clinic.dtos.AppointmentDTO;
+import com.mkopec.clinic.dtos.AppointmentDateDTO;
 import com.mkopec.clinic.dtos.AppointmentPostDTO;
-import com.mkopec.clinic.dtos.ShiftPartDTO;
+import com.mkopec.clinic.dtos.DoctorAppointmentDTO;
+import com.mkopec.clinic.mapper.AppointmentDateMapper;
 import com.mkopec.clinic.mapper.AppointmentMapper;
-import com.mkopec.clinic.mapper.ShiftPartMapper;
+import com.mkopec.clinic.projections.AppointmentDate;
 import com.mkopec.clinic.service.*;
 import lombok.RequiredArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -27,27 +24,36 @@ public class AppointmentController {
     private final PatientService patientService;
     private final PatientCardService patientCardService;
 
-    private final ShiftService shiftService;
     private final ShiftPartService shiftPartService;
-    private final ShiftPartMapper shiftPartMapper;
+    private final AppointmentDateMapper appointmentDateMapper;
 
-    @GetMapping
-    public List<AppointmentDTO> getAll() {
-        return appointmentMapper.toAppointmentDTOs(appointmentService.findAll());
+    @GetMapping("/doctor/{doctorId}")
+    public List<DoctorAppointmentDTO> getTodayAppointments(@PathVariable Long doctorId) {
+        List<Appointment> appointments = appointmentService.findByDateAndDoctorID(Calendar.getInstance(), doctorId);
+        return appointmentMapper.toDoctorAppointmentDTOs(appointments);
     }
 
-    @GetMapping("/{date}/{shiftID}")
-    public List<ShiftPartDTO> getPossibleShiftParts(@PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") Date date, @PathVariable Long shiftID) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
+    @GetMapping("/byDoctor/{id}")
+    public List<AppointmentDateDTO> getAppointmentDatesByDoctor(@PathVariable Long id) {
+        Calendar from = Calendar.getInstance();
 
-        Shift shift = shiftService.findByID(shiftID);
-        List<ShiftPart> doctorShiftParts = shiftPartService.findByShift(shift);
-        List<ShiftPart> shiftPartsWithAppointments = appointmentService.findByDateAndShift(calendar, shift);
+        Calendar to = Calendar.getInstance();
+        to.add(Calendar.YEAR, 1);
 
-        doctorShiftParts.removeAll(shiftPartsWithAppointments);
+        List<AppointmentDate> dates = appointmentService.findAppointmentDates(from, to, new ArrayList<>(Arrays.asList(id)));
+        return appointmentDateMapper.toAppointmentDateDTOs(dates);
+    }
 
-        return shiftPartMapper.toShiftPartDTOs(doctorShiftParts);
+    @GetMapping("/bySpecialization/{id}")
+    public List<AppointmentDateDTO> getAppointmentDatesBySpecialization(@PathVariable Long id) {
+        List<Long> doctorsIDs = doctorService.findBySpecializationID(id);
+
+        Calendar from = Calendar.getInstance();
+        Calendar to = Calendar.getInstance();
+        to.add(Calendar.YEAR, 1);
+
+        List<AppointmentDate> dates = appointmentService.findAppointmentDates(from, to, new ArrayList<>(doctorsIDs));
+        return appointmentDateMapper.toAppointmentDateDTOs(dates);
     }
 
     @PostMapping
