@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -68,7 +69,9 @@ public abstract class AppointmentMapper {
     public abstract List<DoctorAppointmentDTO> toDoctorAppointmentDTOs(List<Appointment> appointments);
 
     protected String getTimeString(Appointment appointment) {
-        return appointment.getShiftPart().getStartTime().toString() + "-" + appointment.getShiftPart().getEndTime().toString();
+        LocalTime from = appointment.getShiftPart().getStartTime().minusHours(1);
+        LocalTime to = appointment.getShiftPart().getEndTime().minusHours(1);
+        return from.toString() + "-" + to.toString();
     }
 
     protected Calendar getDateFromDTO(AppointmentPostDTO dto) {

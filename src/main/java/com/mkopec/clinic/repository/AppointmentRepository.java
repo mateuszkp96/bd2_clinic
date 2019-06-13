@@ -16,8 +16,8 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long>,
     @Query("select ap.shiftPart from Appointment ap where ap.date = ?1 and ap.shift = ?2")
     List<ShiftPart> findByDateAndShift(java.util.Calendar date, Shift shift);
 
-    @Query("select ap from Appointment ap where ap.date = ?1 and ap.patientCard.doctor.id = ?2")
-    List<Appointment> findByDateAndDoctorID(java.util.Calendar date, Long doctorID);
+    @Query("select ap from Appointment ap where ap.date = ?1 and ap.patientCard.doctor.id = ?2 ORDER BY ap.shiftPart.startTime")
+    List<Appointment> findByDateAndDoctorIDOrderedByDate(java.util.Calendar date, Long doctorID);
 
     List<Appointment> findByPatientCard(PatientCard patientCard);
 }
