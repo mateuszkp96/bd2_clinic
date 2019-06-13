@@ -7,4 +7,5 @@ public interface AppointmentDate {
     String getPartEnd();
     String getFirstname();
     String getSurname();
+    Long getDoctorID();
 }

@@ -11,7 +11,7 @@ public interface AppointmentDateRepository {
 
     @Query(nativeQuery = true,
             value = "select selectedDate, Dyżury_Sloty.id, DATE_FORMAT(Dyżury_Sloty.Sloty_start, \"%H:%i\") AS partStart , DATE_FORMAT(Dyżury_Sloty.Sloty_koniec, \"%H:%i\") AS partEnd, " +
-                    "Lekarze.Pracownicy_imię AS firstname, Lekarze.Pracownicy_nazwisko AS surname " +
+                    "Lekarze.Pracownicy_imię AS firstname, Lekarze.Pracownicy_nazwisko AS surname, Lekarze.Pracownicy_id AS doctorID " +
                     "from (select adddate('1970-01-01',t4.i*10000 + t3.i*1000 + t2.i*100 + t1.i*10 + t0.i) selectedDate from" +
                     " (select 0 i union select 1 union select 2 union select 3 union select 4 union select 5 union select 6 union select 7 union select 8 union select 9) t0," +
                     "(select 0 i union select 1 union select 2 union select 3 union select 4 union select 5 union select 6 union select 7 union select 8 union select 9) t1," +

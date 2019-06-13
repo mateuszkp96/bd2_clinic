@@ -73,7 +73,7 @@ public abstract class AppointmentMapper {
 
     protected Calendar getDateFromDTO(AppointmentPostDTO dto) {
         Calendar c = Calendar.getInstance();
-        DateFormat format = new SimpleDateFormat("yyyy-mm-dd");
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         try {
             Date date = format.parse(dto.getDate());
             c.setTime(date);
@@ -84,7 +84,7 @@ public abstract class AppointmentMapper {
     }
 
     protected String getTimeStringCalendar(Appointment appointment) {
-        DateFormat format = new SimpleDateFormat("yyyy-mm-dd");
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         Date date = appointment.getDate().getTime();
         return format.format(date);
     }

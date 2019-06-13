@@ -8,4 +8,5 @@ public class AppointmentDateDTO {
     private String date;
     private String time;
     private String doctorName;
+    private Long doctorID;
 }

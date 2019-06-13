@@ -96,7 +96,7 @@ public class AppointmentController {
                                                      @RequestParam(name = "doctorID") Long doctorID) {
         PatientCard patientCard = patientCardService.findByDoctorIDAndPatientID(doctorID, patientID);
         if (Objects.nonNull(patientCard)) {
-            return appointmentMapper.toShortAppointmentDTOs(appointmentService.findByPatientCard(patientCard));
+            return appointmentMapper.toShortAppointmentDTOs(patientCard.getAppointments());
         }
         return null;
     }
