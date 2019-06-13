@@ -38,7 +38,7 @@ public class AppointmentService {
         return repository.findByDateAndDoctorID(calendar, doctorId);
     }
 
-    public List<AppointmentDate> findAppointmentDates(Calendar from, Calendar to, List<Long> doctorIDs) {
+    public List<AppointmentDate> findAppointmentDates(String from, String to, List<Long> doctorIDs) {
         return repository.findMyResult(from, to, doctorIDs);
     }
 

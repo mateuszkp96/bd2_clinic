@@ -22,7 +22,8 @@ public interface AppointmentDateRepository {
                     "JOIN Lekarze ON Dyżury.Lekarze_Pracownicy_id = Lekarze.Pracownicy_id " +
                     "LEFT JOIN Wizyty ON Wizyty.Dyżury_Sloty_id = Dyżury_Sloty.id WHERE Wizyty.id IS NULL " +
                     "AND selectedDate between :fromDate and :toDate AND Dyżury.dzień_tygodnia = DAYOFWEEK(selectedDate) AND Dyżury.Lekarze_Pracownicy_id IN :list " +
+                    "AND TIMESTAMP(selectedDate, Dyżury_Sloty.Sloty_start) > now() " +
                     "ORDER BY selectedDate, Dyżury_Sloty.Sloty_start " +
                     "LIMIT 30;")
-    List<AppointmentDate> findMyResult(@Param("fromDate") Calendar from, @Param("toDate") Calendar to, @Param("list") List<Long> doctorIDs);
+    List<AppointmentDate> findMyResult(@Param("fromDate") String from, @Param("toDate") String to, @Param("list") List<Long> doctorIDs);
 }

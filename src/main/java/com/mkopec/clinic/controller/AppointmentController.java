@@ -9,6 +9,9 @@ import com.mkopec.clinic.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @RestController
@@ -39,10 +42,12 @@ public class AppointmentController {
 
     @GetMapping("/byDoctor/{id}")
     public List<AppointmentDateDTO> getAppointmentDatesByDoctor(@PathVariable Long id) {
-        Calendar from = Calendar.getInstance();
 
-        Calendar to = Calendar.getInstance();
-        to.add(Calendar.YEAR, 1);
+        String from = getTimeStringCalendar(Calendar.getInstance());
+
+        Calendar toCalendar = Calendar.getInstance();
+        toCalendar.add(Calendar.YEAR, 1);
+        String to = getTimeStringCalendar(toCalendar);
 
         List<AppointmentDate> dates = appointmentService.findAppointmentDates(from, to, new ArrayList<>(Arrays.asList(id)));
         return appointmentDateMapper.toAppointmentDateDTOs(dates);
@@ -52,12 +57,19 @@ public class AppointmentController {
     public List<AppointmentDateDTO> getAppointmentDatesBySpecialization(@PathVariable Long id) {
         List<Long> doctorsIDs = doctorService.findBySpecializationID(id);
 
-        Calendar from = Calendar.getInstance();
-        Calendar to = Calendar.getInstance();
-        to.add(Calendar.YEAR, 1);
+        String from = getTimeStringCalendar(Calendar.getInstance());
+
+        Calendar toCalendar = Calendar.getInstance();
+        toCalendar.add(Calendar.YEAR, 1);
+        String to = getTimeStringCalendar(toCalendar);
 
         List<AppointmentDate> dates = appointmentService.findAppointmentDates(from, to, new ArrayList<>(doctorsIDs));
         return appointmentDateMapper.toAppointmentDateDTOs(dates);
+    }
+
+    private String getTimeStringCalendar(Calendar calendar) {
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        return format.format(calendar.getTime());
     }
 
     @PostMapping
